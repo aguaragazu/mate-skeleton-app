@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ""
+      dockerfile: Dockerfile
+      args:
+        USER_ID: '${WWWUSER:-1000}'
+        GROUP_ID: '${WWWGROUP:-1000}'
+        USER: '${USER:-whoami}'
+    container_name: limpitapiz-app
+    restart: always
+    expose:
+      - 9000
+      - 9003
+    working_dir: /var/www/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../:/var/www
+    networks:
+      - mate
+      - t2_traefik
+    labels:
+      - "traefik.enable=false"
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: limpitapiz-nginx
+    restart: unless-stopped
+    volumes:
+      - ../:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - mate
+      - t2_traefik
+    labels:
+      - "traefik.enable=true"
+      ## HTTP Routers
+      - "traefik.http.routers.limpi-rtr.entrypoints=https"
+      - "traefik.http.routers.limpi-rtr.rule=Host(`limpiback.dev.jjsoft.com.ar`)"
+      - "traefik.http.routers.limpi-rtr.tls=true"
+      - "traefik.http.routers.limpi-rtr.tls.certresolver=dns-cloudflare"
+      ## Middlewares
+      - "traefik.http.routers.limpi-rtr.middlewares=chain-cors@file"
+      ## HTTP Services
+      - "traefik.http.services.limpi-svc.loadbalancer.server.port=80"
+      - "traefik.http.routers.limpi-rtr.service=limpi-svc"
+  db:
+    container_name: limpitapiz-db
+    build: ./mariadb
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: app_terere
+      MYSQL_USER: limpi
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: secret123
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - mate
+
+networks:
+  mate:
+    name: mate
+    external: false
+  t2_traefik:
+    external: true

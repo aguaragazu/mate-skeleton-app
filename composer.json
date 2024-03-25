@@ -1,0 +1,20 @@
+{
+    "name": "aguaragazu/mate",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./app"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jose C Gallo",
+            "email": "aguara_gazu@yahoo.com.ar"
+        }
+    ],
+    "require": {
+        "aguaragazu/mate-framework": "dev-main",
+        "symfony/console": "^6.4"
+    }
+}
