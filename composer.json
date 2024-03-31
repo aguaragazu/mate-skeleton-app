@@ -1,7 +1,6 @@
 {
   "name": "aguaragazu/mate",
   "type": "project",
-  "version": "v1.0.1",
   "keywords": ["php", "mate", "framework"],
   "license": "MIT",
   "authors": [
@@ -27,14 +26,6 @@
       "@php mate key:generate",
       "@php mate migrate --ansi"
     ]
-  },
-  "extra": {
-    "create-project": {
-      "type": "project",
-      "config": {
-        "directory": "src"
-      }
-    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
