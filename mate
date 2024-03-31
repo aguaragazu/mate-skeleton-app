@@ -8,4 +8,4 @@ use Mate\Cli\Cli;
 
 $application = new Cli;
 
-$application->run();
+$application->bootstrap(__DIR__)->run();

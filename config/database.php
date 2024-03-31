@@ -13,7 +13,7 @@ return [
     | is explicitly specified when you execute a query / statement.
     |
     */
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,9 +27,12 @@ return [
     */
 
     'connection' => env('DB_CONNECTION', 'mysql'),
+    'url' => env('DB_URL'),
     'host' => env('DB_HOST', 'localhost'),
     'port' => env('DB_PORT', 3306),
     'database' => env('DB_DATABASE', 'mate'),
     'username' => env('DB_USERNAME', 'root'),
     'password' => env('DB_PASSWORD', ''),
+    'charset' => env('DB_CHARSET', 'utf8mb4'),
+    'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
 ];

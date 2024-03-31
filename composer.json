@@ -16,5 +16,25 @@
     "require": {
         "aguaragazu/mate-framework": "dev-main",
         "symfony/console": "^6.4"
-    }
+    },
+    "scripts": {
+        "post-install-cmd": [
+          "@php bin/create-project"
+        ],
+        "post-root-package-install": [
+          "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+          "@php mate key:generate",
+          "@php mate migrate --ansi"
+        ]
+      },
+      "extra": {
+        "create-project": {
+          "type": "project",
+          "config": {
+            "directory": "src"
+          }
+        }
+      }
 }

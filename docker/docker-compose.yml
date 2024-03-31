@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   app:
     build:
-      context: ""
+      context: "."
       dockerfile: Dockerfile
       args:
         USER_ID: '${WWWUSER:-1000}'
@@ -53,11 +51,11 @@ services:
       - ./storage/mysql:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_DATABASE: app_terere
-      MYSQL_USER: limpi
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: secret123
+      MARIADB_DATABASE: app_terere
+      MARIADB_USER: limpi
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_HOST: '%'
+      MARIADB_ROOT_PASSWORD: secret123
     labels:
       - "traefik.enable=false"
     networks:
